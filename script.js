@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'all': {
             pageTitle: 'Command Center',
             sectionTitle: 'Global Intelligence Feed',
-            pills: ['All', 'High Impact', 'Regulatory'],
+            pills: ['All', 'High Impact', 'Recent (48h)', 'Watchlist (Escalated)', 'Regulatory'],
             kpis: [
                 { id: 1, title: 'AI Ecosystem', valLabel: 'Active Signals', targetAgentId: 1, tags: ['High Impact', 'Generative'], insight: 'Compute-heavy architectural limits are shifting rapidly.', action: 'Review compute dependency across technical roadmap.', icon: 'fa-microchip', colorClass: 'agent-1-gradient', targetNav: 'agent-1' },
                 { id: 2, title: 'Product Shifts', valLabel: 'Strategic Playbooks', targetAgentId: 2, tags: ['GTM', 'Evaluation'], insight: 'Pricing standards are moving toward value & usage constraints.', action: 'Model current margins against Anthropic/MiniMax API drops.', icon: 'fa-layer-group', colorClass: 'agent-2-gradient', targetNav: 'agent-2' },
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'agent-1': {
             pageTitle: 'Intelligence: AI Updates',
             sectionTitle: 'Latest Technical Signals',
-            pills: ['All', 'Models', 'Tools', 'Research', 'Regulation'],
+            pills: ['All', 'High Impact', 'Recent (48h)', 'Watchlist (Escalated)', 'Regulatory'],
             kpis: [
                 { id: 1, title: 'Global AI Signals', valLabel: 'Total Signals', tags: ['High Impact', 'Generative'], insight: 'Grok & Apple push native multi-agent architectures.', action: 'Evaluate eliminating single-model bottlenecks.', icon: 'fa-microchip', colorClass: 'agent-1-gradient', targetPill: 'All' },
                 { id: 2, title: 'Tool/Frameworks', valLabel: 'Infrastructure Drops', tags: ['Open Source', 'Deploy'], insight: 'Meta integrates Manus orchestration into enterprise tooling.', action: 'Test Manus workflows for internal operator pipelines.', icon: 'fa-wrench', colorClass: 'agent-1-gradient', targetPill: 'Tools' },
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'agent-2': {
             pageTitle: 'Intelligence: Product Mgmt',
             sectionTitle: 'Latest Product Signals',
-            pills: ['All', 'Pricing', 'Evaluation', 'GTM', 'Adoption', 'Workflow Design'],
+            pills: ['All', 'High Impact', 'Recent (48h)', 'Watchlist (Escalated)', 'Regulatory'],
             kpis: [
                 { id: 1, title: 'Strategy Signals', valLabel: 'Elite Match Signals', tags: ['Moats', 'Strategy'], insight: 'Product Sense defined as last un-automatable PM skill.', action: 'Filter PM hiring rubrics primarily for ambiguity handling.', icon: 'fa-lightbulb', colorClass: 'agent-2-gradient', targetPill: 'All' },
                 { id: 2, title: 'Workflow Design', valLabel: 'Operational Updates', tags: ['Operations', 'Speed'], insight: 'Startups requiring AI initial drafts immediately.', action: 'Mandate LLM-drafts for all PRDs starting Monday.', icon: 'fa-layer-group', colorClass: 'agent-2-gradient', targetPill: 'Workflow Design' },
@@ -47,11 +47,21 @@ document.addEventListener('DOMContentLoaded', () => {
         'agent-3': {
             pageTitle: 'Intelligence: Fintech',
             sectionTitle: 'Latest Market & Regulatory Signals',
-            pills: ['All', 'Regulatory', 'Fraud', 'Payments', 'Banking', 'Compliance'],
+            ppills: ['All', 'High Impact', 'Recent (48h)', 'Watchlist (Escalated)', 'Regulatory'],
             kpis: [
                 { id: 1, title: 'Regulatory Scrutiny', valLabel: 'Compliance Alerts', tags: ['Critical', 'Asia'], insight: 'First explicit legal framework targeting publisher liability.', action: 'Embed deterministic kill-switches in sweep networks.', icon: 'fa-gavel', colorClass: 'agent-3-gradient', targetPill: 'All' },
                 { id: 2, title: 'Consumer Banking', valLabel: 'Banking Shifts', tags: ['Yield', 'Autonomy'], insight: 'Unverified auto-sweeping across EU money markets live.', action: 'Assess technical feasibility of matching Revolut APYs.', icon: 'fa-money-bill-trend-up', colorClass: 'agent-3-gradient', targetPill: 'Banking' },
                 { id: 3, title: 'Risk Parameters', valLabel: 'Fraud Vectors', tags: ['Stable'], insight: 'Fraud attack vectors remain consistent with prior quarter.', action: 'Maintain current identity verification protocols.', icon: 'fa-shield-halved', colorClass: 'agent-3-gradient', targetPill: 'Fraud' }
+            ]
+        },
+        'weekly': {
+            pageTitle: 'Weekly Executive Summaries',
+            sectionTitle: 'Synthesized Intelligence (Past 7 Days)',
+            pills: ['All', 'High Impact', 'Strategy', 'Risk', 'Technology'],
+            kpis: [
+                { id: 1, title: 'Total Volume', valLabel: 'Total Signals', tags: ['Global'], insight: 'Aggregating global data flow across all active intelligence parameters.', action: 'Review high-impact anomalies below.', icon: 'fa-chart-line', colorClass: 'agent-1-gradient', targetPill: 'All' },
+                { id: 2, title: 'Critical Risk', valLabel: 'High Impact Moves', tags: ['Priority'], insight: 'Market-moving shifts detected this week across domains.', action: 'Distribute to executive leadership for strategic alignment.', icon: 'fa-triangle-exclamation', colorClass: 'agent-3-gradient', targetPill: 'High Impact' },
+                { id: 3, title: 'Strategic Shifts', valLabel: 'New Frameworks', tags: ['Operations'], insight: 'New operating models emerging across competitors and tools.', action: 'Audit internal processes against new benchmarks.', icon: 'fa-chess', colorClass: 'agent-2-gradient', targetPill: 'Strategy' }
             ]
         }
     };
@@ -225,19 +235,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 } else if (kpi.targetPill === 'All') {
                     // Agent overview card — total count for this agent
-                    count = LIVE_DATA.filter(item => item.agentId === agentMap[configKey]).length;
+                    if (configKey === 'all' || configKey === 'weekly') {
+                        count = LIVE_DATA.length;
+                    } else {
+                        count = LIVE_DATA.filter(item => item.agentId === agentMap[configKey]).length;
+                    }
 
                 } else if (kpi.targetPill) {
                     // Drill-down card — keyword match within agent's articles
                     const lowerPill = kpi.targetPill.toLowerCase();
-                    count = LIVE_DATA.filter(item => {
-                        if (item.agentId !== agentMap[configKey]) return false;
-                        const haystack = [
-                            item.title, item.summary, item.primary_tag,
-                            item.secondary_tags, item.agent, item.source
-                        ].join(' ').toLowerCase();
-                        return haystack.includes(lowerPill);
-                    }).length;
+                    if (lowerPill === 'high impact') {
+                        count = LIVE_DATA.filter(i => i.impactScore === 'High').length;
+                    } else if (lowerPill === 'strategy') {
+                        count = LIVE_DATA.filter(i => {
+                            const haystack = [i.title, i.summary, i.primary_tag, i.secondary_tags].join(' ').toLowerCase();
+                            return haystack.match(/strateg|framework|moat|competitor|business|revenue|operat|model/);
+                        }).length;
+                    } else {
+                        count = LIVE_DATA.filter(item => {
+                            if (configKey !== 'all' && configKey !== 'weekly' && item.agentId !== agentMap[configKey]) return false;
+                            const haystack = [
+                                item.title, item.summary, item.primary_tag,
+                                item.secondary_tags, item.agent, item.source
+                            ].join(' ').toLowerCase();
+                            return haystack.includes(lowerPill);
+                        }).length;
+                    }
                 }
             }
 
@@ -318,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let filteredData = LIVE_DATA || [];
 
         // Filter by agent
-        if (navTarget !== 'all') {
+        if (navTarget !== 'all' && navTarget !== 'weekly') {
             const agentMap = { 'agent-1': 1, 'agent-2': 2, 'agent-3': 3 };
             filteredData = filteredData.filter(item => item.agentId === agentMap[navTarget]);
         }
@@ -328,13 +351,35 @@ document.addEventListener('DOMContentLoaded', () => {
             const lowerPill = pillText.toLowerCase();
             if (lowerPill === 'high impact') {
                 filteredData = filteredData.filter(i => i.impactScore === 'High');
+            } else if (lowerPill === 'strategy') {
+                filteredData = filteredData.filter(i => {
+                    const haystack = [i.title, i.summary, i.primary_tag, i.secondary_tags].join(' ').toLowerCase();
+                    return haystack.match(/strateg|framework|moat|competitor|business|revenue|operat|model/);
+                });
             } else if (lowerPill === 'regulatory') {
                 // Regulatory pill: match impact OR keyword so it catches both
                 filteredData = filteredData.filter(i => {
                     const haystack = [i.title, i.summary, i.primary_tag, i.secondary_tags].join(' ').toLowerCase();
                     return haystack.match(/regulat|compliance|liability|draft|ban|mandate|fca|mas|law|govern/);
                 });
-            } else {
+            } else if (lowerPill === 'recent (48h)') {
+   		 const now = new Date();
+		 filteredData = filteredData.filter(i => {
+        	 if (!i.date) return false;
+
+	        const articleDate = new Date(i.date);
+        	if (isNaN(articleDate)) return false;	
+
+	        const diffMs = now - articleDate;
+        	return diffMs <= 48 * 60 * 60 * 1000;
+	    	});
+
+	    } else if (lowerPill === 'watchlist (escalated)') {
+    		filteredData = filteredData.filter(i => {
+        	return String(i.escalation || '').toUpperCase() === 'YES';
+   	    });
+	    }
+		else {
                 filteredData = filteredData.filter(i => {
                     const haystack = [
                         i.title, i.summary, i.primary_tag,
