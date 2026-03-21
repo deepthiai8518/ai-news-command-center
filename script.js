@@ -73,11 +73,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ─────────────────────────────────────────────────────────────
-    // AGENT INSIGHTS GENERATOR
-    // Produces smarter contextual text based on title keywords
-    // rather than relying solely on the summary field.
+    // IMPACT SCORING
+    // Uses real OpenAI impact score from sheet if available,
+    // otherwise falls back to keyword matching on title.
     // ─────────────────────────────────────────────────────────────
-    function generateAgentInsights(agentId, title, summary) {
+    function scoreImpact(title, summary, sheetImpact) {
+        // If OpenAI already scored it in the sheet, trust that
+        if (sheetImpact && ['High', 'Medium', 'Low'].includes(sheetImpact)) {
+            return sheetImpact;
+        }
+
+        // Fallback: keyword match on title only
+        const text = title.toLowerCase();
+        if (text.match(/acquires|acquired|raises \$|drafts liability|strict liability|bans|mandated|fined \$|shuts down|gpt-\d|llama \d|claude \d|gemini \d|data breach|breached|exploited|hacked|sanctions/)) return 'High';
+        if (text.match(/launches|releases|introduces|regulation|framework|draft|mandate|benchmark|layoff|restructur|fraud|beta|automat|retention|planning|warns/)) return 'Medium';
+        return 'Low';
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // AGENT INSIGHTS GENERATOR
+    // Uses real OpenAI-generated insights from sheet if available.
+    // Falls back to keyword templates for unparsed articles.
+    // ─────────────────────────────────────────────────────────────
+    function generateAgentInsights(agentId, title, summary, secondaryTags) {
+        // Try to parse real OpenAI insights stored as JSON in secondary_tags
+        if (secondaryTags && secondaryTags.trim().startsWith('{')) {
+            try {
+                const parsed = JSON.parse(secondaryTags);
+                if (parsed.insight1Title && parsed.insight1Text) {
+                    return {
+                        f1_title: parsed.insight1Title,
+                        f1_val:   parsed.insight1Text,
+                        f2_title: parsed.insight2Title || 'Watchpoint',
+                        f2_val:   parsed.insight2Text  || 'Monitor for further developments.'
+                    };
+                }
+            } catch (e) {
+                // Not valid JSON — fall through to keyword templates
+            }
+        }
+
+        // ── FALLBACK KEYWORD TEMPLATES ────────────────────────────
         const text = (title + ' ' + summary).toLowerCase();
         let insights = {};
 
@@ -93,11 +129,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 insights.f1_val = 'Provides foundational architecture optimizations worth tracking.';
             }
             insights.f2_title = 'Ecosystem Impact';
-            if (text.match(/acqui|merger|partner/)) {
-                insights.f2_val = 'Consolidation signal — monitor for downstream API pricing and availability changes.';
-            } else {
-                insights.f2_val = 'Accelerates the shift toward localized, multi-agent frameworks across the industry.';
-            }
+            insights.f2_val = text.match(/acqui|merger|partner/)
+                ? 'Consolidation signal — monitor for downstream API pricing and availability changes.'
+                : 'Accelerates the shift toward localized, multi-agent frameworks across the industry.';
 
         } else if (agentId === 2) { // AI PM
             insights.f1_title = 'Product Implication';
@@ -111,11 +145,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 insights.f1_val = 'Signals a transition from UI-heavy apps to workflow-native AI orchestration.';
             }
             insights.f2_title = 'Suggested Action';
-            if (text.match(/acqui|merger/)) {
-                insights.f2_val = 'Assess vendor lock-in risk — evaluate alternative providers before pricing shifts materialize.';
-            } else {
-                insights.f2_val = 'Assess current roadmap to ensure multi-agent discovery features are prioritized over standard delivery tasks.';
-            }
+            insights.f2_val = text.match(/acqui|merger/)
+                ? 'Assess vendor lock-in risk — evaluate alternative providers before pricing shifts materialize.'
+                : 'Assess current roadmap to ensure multi-agent discovery features are prioritized over standard delivery tasks.';
 
         } else { // AI Fintech (agentId === 3)
             insights.f1_title = 'Risk / Opportunity';
@@ -252,9 +284,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Enrich each article with impact score and agent insights
             LIVE_DATA.forEach(article => {
-                article.impactScore = scoreImpact(article.title, article.summary);
-                // Pass title into generateAgentInsights for smarter keyword matching
-                article.insights = generateAgentInsights(article.agentId, article.title, article.summary);
+                // Pass sheet impact score so real OpenAI scores take priority
+                article.impactScore = scoreImpact(article.title, article.summary, article.impact);
+                // Pass secondary_tags so real OpenAI insights are used when available
+                article.insights = generateAgentInsights(
+                    article.agentId,
+                    article.title,
+                    article.summary,
+                    article.secondary_tags
+                );
             });
 
             // Sort: High → Medium → Low, then newest first within each tier
