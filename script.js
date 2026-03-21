@@ -127,8 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById(`kpi-${index}-insight`).textContent = kpi.insight;
             document.getElementById(`kpi-${index}-action`).textContent = kpi.action;
             
-            // Add click interaction router
-            cardEl.onclick = () => {
+            // Add bulletproof click interaction router
+            cardEl.onclick = (e) => {
+                e.preventDefault(); // Stop any bubbling interference
+                
                 // If it's a global KPI navigating downward to an agent module
                 if(kpi.targetNav) {
                     const navItem = document.querySelector(`.nav-item[data-target="${kpi.targetNav}"]`);
@@ -138,8 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (kpi.targetPill) {
                     const pillEls = document.querySelectorAll('.pill');
                     pillEls.forEach(p => {
-                        if(p.textContent === kpi.targetPill) {
-                            p.click();
+                        if(p.textContent.trim() === kpi.targetPill.trim()) {
+                            p.click(); // Dispatches the built-in click event to filter automatically
                         }
                     });
                 }
@@ -188,8 +190,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (lowerPill === 'high impact') filteredData = filteredData.filter(i => i.impactScore === 'High');
             else if (lowerPill === 'trending') {} // noop
             else {
-                // Keyword match roughly
-                filteredData = filteredData.filter(i => (i.title + i.summary).toLowerCase().includes(lowerPill));
+                // Deep Keyword Match across all available data columns
+                filteredData = filteredData.filter(i => {
+                    const haystack = [i.title, i.summary, i.primaryTag, i.secondaryTags, i.agent, i.source].join(' ').toLowerCase();
+                    return haystack.includes(lowerPill);
+                });
             }
         }
 
