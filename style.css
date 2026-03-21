@@ -82,8 +82,9 @@ body {
 
 /* KPIs */
 .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem; }
-.kpi-card { padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem; position: relative; overflow: hidden; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-.kpi-card:hover { transform: translateY(-5px); }
+.kpi-card { padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem; position: relative; overflow: hidden; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
+.kpi-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+.kpi-card:active { transform: scale(0.97); }
 
 .agent-1-gradient::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gradient-1); }
 .agent-2-gradient::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gradient-2); }

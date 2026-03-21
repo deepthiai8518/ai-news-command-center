@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sectionTitle: 'Global Intelligence Feed',
             pills: ['All', 'High Impact', 'Regulatory'],
             kpis: [
-                {id: 1, title: 'AI Updates', val: '-', label: 'New Signals (24h)', icon: 'fa-microchip', colorClass: 'agent-1-gradient'},
-                {id: 2, title: 'Product Mgmt', val: '-', label: 'New Frameworks', icon: 'fa-layer-group', colorClass: 'agent-2-gradient'},
-                {id: 3, title: 'Fintech & Reg', val: '-', label: 'Critical Alerts', icon: 'fa-building-columns', colorClass: 'agent-3-gradient'}
+                {id: 1, title: 'AI Updates', val: '-', label: 'New Signals (24h)', icon: 'fa-microchip', colorClass: 'agent-1-gradient', targetNav: 'agent-1'},
+                {id: 2, title: 'Product Mgmt', val: '-', label: 'New Frameworks', icon: 'fa-layer-group', colorClass: 'agent-2-gradient', targetNav: 'agent-2'},
+                {id: 3, title: 'Fintech & Reg', val: '-', label: 'Critical Alerts', icon: 'fa-building-columns', colorClass: 'agent-3-gradient', targetNav: 'agent-3'}
             ]
         },
         'agent-1': {
@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sectionTitle: 'Latest Technical Signals',
             pills: ['All', 'Models', 'Tools', 'Research', 'Regulation'],
             kpis: [
-                {id: 1, title: 'AI Updates', val: '-', label: 'New Signals (24h)', icon: 'fa-microchip', colorClass: 'agent-1-gradient'},
-                {id: 2, title: 'Tool Releases', val: '-', label: 'Frameworks', icon: 'fa-wrench', colorClass: 'agent-1-gradient'},
-                {id: 3, title: 'Research', val: '-', label: 'Paper Alerts', icon: 'fa-book', colorClass: 'agent-1-gradient'}
+                {id: 1, title: 'AI Updates', val: '-', label: 'New Signals (24h)', icon: 'fa-microchip', colorClass: 'agent-1-gradient', targetPill: 'All'},
+                {id: 2, title: 'Tool Releases', val: '-', label: 'Frameworks', icon: 'fa-wrench', colorClass: 'agent-1-gradient', targetPill: 'Tools'},
+                {id: 3, title: 'Research', val: '-', label: 'Paper Alerts', icon: 'fa-book', colorClass: 'agent-1-gradient', targetPill: 'Research'}
             ]
         },
         'agent-2': {
@@ -40,9 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sectionTitle: 'Latest Product Signals',
             pills: ['All', 'Pricing', 'Evaluation', 'GTM', 'Adoption', 'Workflow Design'],
             kpis: [
-                {id: 1, title: 'Product Insights', val: '-', label: 'User Behavior', icon: 'fa-lightbulb', colorClass: 'agent-2-gradient'},
-                {id: 2, title: 'New Frameworks', val: '-', label: 'Operating Models', icon: 'fa-layer-group', colorClass: 'agent-2-gradient'},
-                {id: 3, title: 'Strategy Signals', val: '-', label: 'Pricing / GTM', icon: 'fa-chess-knight', colorClass: 'agent-2-gradient'}
+                {id: 1, title: 'Product Insights', val: '-', label: 'User Behavior', icon: 'fa-lightbulb', colorClass: 'agent-2-gradient', targetPill: 'Evaluation'},
+                {id: 2, title: 'New Frameworks', val: '-', label: 'Operating Models', icon: 'fa-layer-group', colorClass: 'agent-2-gradient', targetPill: 'Workflow Design'},
+                {id: 3, title: 'Strategy Signals', val: '-', label: 'Pricing / GTM', icon: 'fa-chess-knight', colorClass: 'agent-2-gradient', targetPill: 'GTM'}
             ]
         },
         'agent-3': {
@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sectionTitle: 'Latest Market & Regulatory Signals',
             pills: ['All', 'Regulatory', 'Fraud', 'Payments', 'Banking', 'Compliance'],
             kpis: [
-                {id: 1, title: 'Regulatory Alerts', val: '-', label: 'MAS / FCA Updates', icon: 'fa-gavel', colorClass: 'agent-3-gradient'},
-                {id: 2, title: 'Market Moves', val: '-', label: 'Competitor Intel', icon: 'fa-money-bill-trend-up', colorClass: 'agent-3-gradient'},
-                {id: 3, title: 'Risk Signals', val: '-', label: 'Fraud / Compliance', icon: 'fa-shield-halved', colorClass: 'agent-3-gradient'}
+                {id: 1, title: 'Regulatory Alerts', val: '-', label: 'MAS / FCA Updates', icon: 'fa-gavel', colorClass: 'agent-3-gradient', targetPill: 'Regulatory'},
+                {id: 2, title: 'Market Moves', val: '-', label: 'Competitor Intel', icon: 'fa-money-bill-trend-up', colorClass: 'agent-3-gradient', targetPill: 'Banking'},
+                {id: 3, title: 'Risk Signals', val: '-', label: 'Fraud / Compliance', icon: 'fa-shield-halved', colorClass: 'agent-3-gradient', targetPill: 'Fraud'}
             ]
         }
     };
@@ -111,13 +111,32 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update KPIs
         config.kpis.forEach((kpi, idx) => {
             const index = idx + 1;
-            document.getElementById(`kpi-card-${index}`).className = `kpi-card glass ${kpi.colorClass}`;
+            const cardEl = document.getElementById(`kpi-card-${index}`);
+            cardEl.className = `kpi-card glass ${kpi.colorClass}`;
             document.getElementById(`kpi-icon-${index}`).innerHTML = `<i class="fa-solid ${kpi.icon}"></i>`;
             document.getElementById(`kpi-${index}-title`).textContent = kpi.title;
             // Generate dummy KPI values for demo, but realistically calculated
             const val = Math.floor(Math.random() * 20) + 1;
             document.getElementById(`kpi-${index}-val`).textContent = val;
             document.getElementById(`kpi-${index}-label`).textContent = kpi.label;
+            
+            // Add click interaction router
+            cardEl.onclick = () => {
+                // If it's a global KPI navigating downward to an agent module
+                if(kpi.targetNav) {
+                    const navItem = document.querySelector(`.nav-item[data-target="${kpi.targetNav}"]`);
+                    if(navItem) navItem.click();
+                } 
+                // If it's an agent KPI triggering a pill filter within its own module
+                else if (kpi.targetPill) {
+                    const pillEls = document.querySelectorAll('.pill');
+                    pillEls.forEach(p => {
+                        if(p.textContent === kpi.targetPill) {
+                            p.click();
+                        }
+                    });
+                }
+            };
         });
     }
 
