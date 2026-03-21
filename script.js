@@ -150,17 +150,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             
-            document.getElementById(`kpi-${index}-val`).textContent = count > 0 ? `${count} ${kpi.valLabel}` : `0 ${kpi.valLabel}`;
-            
-            // Build Tags
-            const tagsContainer = document.getElementById(`kpi-${index}-tags`);
-            tagsContainer.innerHTML = '';
-            kpi.tags.forEach(t => {
-                tagsContainer.innerHTML += `<span class="micro-tag">${t}</span>`;
-            });
-            
-            document.getElementById(`kpi-${index}-insight`).textContent = kpi.insight;
-            document.getElementById(`kpi-${index}-action`).textContent = kpi.action;
+            if (count > 0) {
+                document.getElementById(`kpi-${index}-val`).textContent = `${count} ${kpi.valLabel}`;
+                document.getElementById(`kpi-${index}-insight`).textContent = kpi.insight;
+                document.getElementById(`kpi-${index}-action`).textContent = kpi.action;
+                
+                const tagsContainer = document.getElementById(`kpi-${index}-tags`);
+                tagsContainer.innerHTML = '';
+                kpi.tags.forEach(t => {
+                    tagsContainer.innerHTML += `<span class="micro-tag">${t}</span>`;
+                });
+                cardEl.classList.remove('kpi-empty-state');
+            } else {
+                document.getElementById(`kpi-${index}-val`).textContent = `No ${kpi.valLabel}`;
+                document.getElementById(`kpi-${index}-insight`).textContent = "Signal flow idle. Ecosystem remains totally stable.";
+                document.getElementById(`kpi-${index}-action`).textContent = "Safely maintain current operational roadmap.";
+                document.getElementById(`kpi-${index}-tags`).innerHTML = `<span class="micro-tag stable-tag">Stable Baseline</span>`;
+                cardEl.classList.add('kpi-empty-state');
+            }
             
             // Add bulletproof click interaction router
             cardEl.onclick = (e) => {
