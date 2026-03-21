@@ -59,9 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /** AI Simulation: Determines impact score based on text analysis */
     function scoreImpact(title, summary) {
-        const text = (title + " " + summary).toLowerCase();
-        if (text.match(/launch|release|regulation|draft|acquire|framework|liability/)) return "High";
-        if (text.match(/update|feature|introduce|shift/)) return "Medium";
+        const cleanSummary = (summary === 'Pending GenAI Summary' ? '' : summary);
+        const text = (title + " " + cleanSummary).toLowerCase();
+
+        // High Impact — market-moving or structural signals
+        if (text.match(/launch|release|regulation|draft|acqui|framework|liability|breach|ban|mandate|shutdown|merger|partnership|raises|billion|critical|shatters|reborn|pioneers|end of|open.source|benchmark|outperform|surpass|layoff|restructur|reorg|commoditiz|displac|fraud|sanction|cbdc|stablecoin|kyc|aml|exploit|hack/)) return "High";
+
+        // Medium Impact — worth watching
+        if (text.match(/update|feature|introduce|shift|build|expands|integrates|improves|optimizes|announces|explores|tests|soft\.launch|beta|automat|fine\.tun|moat|discovery/)) return "Medium";
+
         return "Low";
     }
 
