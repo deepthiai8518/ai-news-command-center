@@ -80,24 +80,54 @@ body {
 .dot { width: 8px; height: 8px; border-radius: 50%; background-color: #10b981; }
 .dot.live { animation: pulse-dot 1.5s infinite; }
 
-/* KPIs */
+/* Intelligence Support Cards */
 .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem; }
-.kpi-card { padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem; position: relative; overflow: hidden; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
-.kpi-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
-.kpi-card:active { transform: scale(0.97); }
+
+.kpi-card { 
+    padding: 1.5rem; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1.2rem; 
+    position: relative; 
+    overflow: hidden; 
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.2s; 
+    cursor: pointer; 
+}
+.kpi-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.25); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+.kpi-card:active { transform: scale(0.98); }
 
 .agent-1-gradient::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gradient-1); }
 .agent-2-gradient::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gradient-2); }
 .agent-3-gradient::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gradient-3); }
 
-.kpi-icon { font-size: 2rem; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); }
-.agent-1-gradient .kpi-icon { color: var(--accent-agent1); box-shadow: 0 0 15px rgba(236,72,153,0.2); }
-.agent-2-gradient .kpi-icon { color: var(--accent-agent2); box-shadow: 0 0 15px rgba(59,130,246,0.2); }
-.agent-3-gradient .kpi-icon { color: var(--accent-agent3); box-shadow: 0 0 15px rgba(16,185,129,0.2); }
+/* Card Header */
+.kpi-card-header { display: flex; align-items: center; gap: 1rem; width: 100%; }
+.kpi-icon { font-size: 1.2rem; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); }
+.agent-1-gradient .kpi-icon { color: var(--accent-agent1); box-shadow: 0 0 15px rgba(236,72,153,0.15); }
+.agent-2-gradient .kpi-icon { color: var(--accent-agent2); box-shadow: 0 0 15px rgba(59,130,246,0.15); }
+.agent-3-gradient .kpi-icon { color: var(--accent-agent3); box-shadow: 0 0 15px rgba(16,185,129,0.15); }
+.kpi-card-header h3 { font-size: 0.95rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0; }
 
-.kpi-info h3 { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-.kpi-value { font-size: 2.2rem; font-weight: 700; margin: 0.2rem 0; }
-.kpi-label { font-size: 0.8rem; color: var(--text-muted); }
+/* Metrics Group */
+.kpi-metric-group { display: flex; flex-direction: column; gap: 0.6rem; }
+.kpi-value { font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin: 0; line-height: 1.2; }
+.kpi-micro-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.micro-tag { padding: 0.2rem 0.6rem; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; border-radius: 4px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); }
+
+/* Insight / Action Block */
+.kpi-insight-block {
+    background: rgba(0,0,0,0.25);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 100%;
+}
+.kpi-insight { color: var(--text-main); font-size: 0.85rem; line-height: 1.4; display: flex; gap: 0.5rem; align-items: flex-start; }
+.kpi-insight i { color: #f59e0b; margin-top: 2px; }
+.kpi-action { color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; display: flex; gap: 0.5rem; align-items: flex-start; font-weight: 500; }
+.kpi-action i { color: var(--accent-agent2); margin-top: 2px; }
 
 /* Feed Section */
 .feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
