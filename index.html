@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity | AI Intelligence Dashboard</title>
+    <meta name="description" content="Multi-Agent Decision Intelligence System">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar glass">
+            <div class="logo">
+                <i class="fa-solid fa-satellite-dish pulse-icon"></i>
+                <h2>Antigravity</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-target="all">
+                    <i class="fa-solid fa-border-all"></i> Command Center
+                </a>
+                <a href="#" class="nav-item agent-nav-1" data-target="agent-1">
+                    <i class="fa-solid fa-robot"></i> AI Updates Agent
+                </a>
+                <a href="#" class="nav-item agent-nav-2" data-target="agent-2">
+                    <i class="fa-solid fa-box-open"></i> AI PM Agent
+                </a>
+                <a href="#" class="nav-item agent-nav-3" data-target="agent-3">
+                    <i class="fa-solid fa-coins"></i> AI Fintech Agent
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i> Weekly Summaries
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="sync-btn" class="sync-btn">
+                    <i class="fa-solid fa-rotate"></i> Sync Agents
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <h1 id="page-title">Command Center</h1>
+                    <p class="subtitle">Autonomous decision support modules</p>
+                </div>
+                <div class="header-right">
+                    <div class="status-badge" id="sync-status">
+                        <span class="dot live"></span> System Live
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic KPI Cards -->
+            <section class="kpi-grid">
+                <div class="kpi-card glass agent-1-gradient" id="kpi-card-1">
+                    <div class="kpi-icon" id="kpi-icon-1"><i class="fa-solid fa-microchip"></i></div>
+                    <div class="kpi-info">
+                        <h3 id="kpi-1-title">AI Updates</h3>
+                        <p class="kpi-value" id="kpi-1-val">24</p>
+                        <p class="kpi-label" id="kpi-1-label">New Signals (24h)</p>
+                    </div>
+                </div>
+                <div class="kpi-card glass agent-2-gradient" id="kpi-card-2">
+                    <div class="kpi-icon" id="kpi-icon-2"><i class="fa-solid fa-layer-group"></i></div>
+                    <div class="kpi-info">
+                        <h3 id="kpi-2-title">Product Mgmt</h3>
+                        <p class="kpi-value" id="kpi-2-val">12</p>
+                        <p class="kpi-label" id="kpi-2-label">New Frameworks</p>
+                    </div>
+                </div>
+                <div class="kpi-card glass agent-3-gradient" id="kpi-card-3">
+                    <div class="kpi-icon" id="kpi-icon-3"><i class="fa-solid fa-building-columns"></i></div>
+                    <div class="kpi-info">
+                        <h3 id="kpi-3-title">Fintech & Reg</h3>
+                        <p class="kpi-value" id="kpi-3-val">8</p>
+                        <p class="kpi-label" id="kpi-3-label">Critical Alerts</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Intelligence Feed -->
+            <section class="feed-section">
+                <div class="feed-header">
+                    <h2 id="section-title">Global Intelligence Feed</h2>
+                    <div class="filter-pills" id="dynamic-filters">
+                        <!-- Dynamic Pills Injected Here -->
+                    </div>
+                </div>
+                
+                <div class="feed-grid" id="article-feed">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Initializing Agents...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
