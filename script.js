@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sectionTitle: 'Global Intelligence Feed',
             pills: ['All', 'High Impact', 'Regulatory'],
             kpis: [
-                {id: 1, title: 'AI Ecosystem (24h)', val: '8 Core Developments', tags: ['High Impact', 'Generative'], insight: 'Compute-heavy architectural limits are shifting rapidly.', action: 'Review compute dependency across technical roadmap.', icon: 'fa-microchip', colorClass: 'agent-1-gradient', targetNav: 'agent-1'},
-                {id: 2, title: 'Product Shifts (24h)', val: '3 Strategic Playbooks', tags: ['GTM', 'Evaluation'], insight: 'Pricing standards are moving toward value & usage constraints.', action: 'Model current margins against Anthropic/MiniMax API drops.', icon: 'fa-layer-group', colorClass: 'agent-2-gradient', targetNav: 'agent-2'},
-                {id: 3, title: 'Fintech Market (24h)', val: '1 Regulatory Draft', tags: ['Compliance', 'Liability'], insight: 'Singapore draft places strict liability on AI publishers directly.', action: 'Halt autonomous agent deployment until guardrails verified.', icon: 'fa-building-columns', colorClass: 'agent-3-gradient', targetNav: 'agent-3'}
+                {id: 1, title: 'AI Ecosystem', valLabel: 'Active Signals', targetAgentId: 1, tags: ['High Impact', 'Generative'], insight: 'Compute-heavy architectural limits are shifting rapidly.', action: 'Review compute dependency across technical roadmap.', icon: 'fa-microchip', colorClass: 'agent-1-gradient', targetNav: 'agent-1'},
+                {id: 2, title: 'Product Shifts', valLabel: 'Strategic Playbooks', targetAgentId: 2, tags: ['GTM', 'Evaluation'], insight: 'Pricing standards are moving toward value & usage constraints.', action: 'Model current margins against Anthropic/MiniMax API drops.', icon: 'fa-layer-group', colorClass: 'agent-2-gradient', targetNav: 'agent-2'},
+                {id: 3, title: 'Fintech Market', valLabel: 'Regulatory Drafts', targetAgentId: 3, tags: ['Compliance', 'Liability'], insight: 'Singapore draft places strict liability on AI publishers directly.', action: 'Halt autonomous agent deployment until guardrails verified.', icon: 'fa-building-columns', colorClass: 'agent-3-gradient', targetNav: 'agent-3'}
             ]
         },
         'agent-1': {
@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sectionTitle: 'Latest Technical Signals',
             pills: ['All', 'Models', 'Tools', 'Research', 'Regulation'],
             kpis: [
-                {id: 1, title: 'AI Signals (24h)', val: '4 Major Model Shifts', tags: ['High Impact', 'Generative'], insight: 'Grok & Apple push native multi-agent architectures.', action: 'Evaluate eliminating single-model bottlenecks.', icon: 'fa-microchip', colorClass: 'agent-1-gradient', targetPill: 'All'},
-                {id: 2, title: 'Tool/Frameworks', val: '2 Infrastructure Drops', tags: ['Open Source', 'Deploy'], insight: 'Meta integrates Manus orchestration into enterprise tooling.', action: 'Test Manus workflows for internal operator pipelines.', icon: 'fa-wrench', colorClass: 'agent-1-gradient', targetPill: 'Tools'},
-                {id: 3, title: 'Research Vectors', val: 'New Anthropic Paper', tags: ['Pricing', 'Limits'], insight: 'Effort Controls prove critical to compute-heavy UX.', action: 'Design slider UIs to let users dictate response intelligence.', icon: 'fa-book', colorClass: 'agent-1-gradient', targetPill: 'Research'}
+                {id: 1, title: 'Global AI Signals', valLabel: 'Total Signals', tags: ['High Impact', 'Generative'], insight: 'Grok & Apple push native multi-agent architectures.', action: 'Evaluate eliminating single-model bottlenecks.', icon: 'fa-microchip', colorClass: 'agent-1-gradient', targetPill: 'All'},
+                {id: 2, title: 'Tool/Frameworks', valLabel: 'Infrastructure Drops', tags: ['Open Source', 'Deploy'], insight: 'Meta integrates Manus orchestration into enterprise tooling.', action: 'Test Manus workflows for internal operator pipelines.', icon: 'fa-wrench', colorClass: 'agent-1-gradient', targetPill: 'Tools'},
+                {id: 3, title: 'Research Vectors', valLabel: 'Research Papers', tags: ['Pricing', 'Limits'], insight: 'Effort Controls prove critical to compute-heavy UX.', action: 'Design slider UIs to let users dictate response intelligence.', icon: 'fa-book', colorClass: 'agent-1-gradient', targetPill: 'Research'}
             ]
         },
         'agent-2': {
@@ -40,9 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sectionTitle: 'Latest Product Signals',
             pills: ['All', 'Pricing', 'Evaluation', 'GTM', 'Adoption', 'Workflow Design'],
             kpis: [
-                {id: 1, title: 'Strategy Signals', val: '2 Elite Frameworks', tags: ['Moats', 'Strategy'], insight: 'Product Sense defined as last un-automatable PM skill.', action: 'Filter PM hiring rubrics primarily for ambiguity handling.', icon: 'fa-lightbulb', colorClass: 'agent-2-gradient', targetPill: 'GTM'},
-                {id: 2, title: 'Workflow Design', val: 'Draft-Zero Standard', tags: ['Operations', 'Speed'], insight: 'Startups requiring AI initial drafts immediately.', action: 'Mandate LLM-drafts for all PRDs starting Monday.', icon: 'fa-layer-group', colorClass: 'agent-2-gradient', targetPill: 'Workflow Design'},
-                {id: 3, title: 'Team Structure', val: 'End of Product Owner', tags: ['Agile', 'Org Design'], insight: 'Delivery-only agile ticket writers face absolute automation.', action: 'Pivot existing POs into product discovery workflows immediately.', icon: 'fa-chess-knight', colorClass: 'agent-2-gradient', targetPill: 'Evaluation'}
+                {id: 1, title: 'Strategy Signals', valLabel: 'Elite Match Signals', tags: ['Moats', 'Strategy'], insight: 'Product Sense defined as last un-automatable PM skill.', action: 'Filter PM hiring rubrics primarily for ambiguity handling.', icon: 'fa-lightbulb', colorClass: 'agent-2-gradient', targetPill: 'GTM'},
+                {id: 2, title: 'Workflow Design', valLabel: 'Operational Updates', tags: ['Operations', 'Speed'], insight: 'Startups requiring AI initial drafts immediately.', action: 'Mandate LLM-drafts for all PRDs starting Monday.', icon: 'fa-layer-group', colorClass: 'agent-2-gradient', targetPill: 'Workflow Design'},
+                {id: 3, title: 'Team Structure', valLabel: 'Evaluation Frameworks', tags: ['Agile', 'Org Design'], insight: 'Delivery-only agile ticket writers face absolute automation.', action: 'Pivot existing POs into product discovery workflows immediately.', icon: 'fa-chess-knight', colorClass: 'agent-2-gradient', targetPill: 'Evaluation'}
             ]
         },
         'agent-3': {
@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sectionTitle: 'Latest Market & Regulatory Signals',
             pills: ['All', 'Regulatory', 'Fraud', 'Payments', 'Banking', 'Compliance'],
             kpis: [
-                {id: 1, title: 'Regulatory Scrutiny', val: 'MAS Liability Draft', tags: ['Critical', 'Asia'], insight: 'First explicit legal framework targeting publisher liability.', action: 'Embed deterministic kill-switches in sweep networks.', icon: 'fa-gavel', colorClass: 'agent-3-gradient', targetPill: 'Regulatory'},
-                {id: 2, title: 'Consumer Banking', val: 'Revolut AI Release', tags: ['Yield', 'Autonomy'], insight: 'Unverified auto-sweeping across EU money markets live.', action: 'Assess technical feasibility of matching Revolut APYs.', icon: 'fa-money-bill-trend-up', colorClass: 'agent-3-gradient', targetPill: 'Banking'},
-                {id: 3, title: 'Risk Parameters', val: 'No New Patterns', tags: ['Stable'], insight: 'Fraud attack vectors remain consistent with prior quarter.', action: 'Maintain current identity verification protocols.', icon: 'fa-shield-halved', colorClass: 'agent-3-gradient', targetPill: 'Fraud'}
+                {id: 1, title: 'Regulatory Scrutiny', valLabel: 'Compliance Alerts', tags: ['Critical', 'Asia'], insight: 'First explicit legal framework targeting publisher liability.', action: 'Embed deterministic kill-switches in sweep networks.', icon: 'fa-gavel', colorClass: 'agent-3-gradient', targetPill: 'Regulatory'},
+                {id: 2, title: 'Consumer Banking', valLabel: 'Banking Shifts', tags: ['Yield', 'Autonomy'], insight: 'Unverified auto-sweeping across EU money markets live.', action: 'Assess technical feasibility of matching Revolut APYs.', icon: 'fa-money-bill-trend-up', colorClass: 'agent-3-gradient', targetPill: 'Banking'},
+                {id: 3, title: 'Risk Parameters', valLabel: 'Fraud Vectors', tags: ['Stable'], insight: 'Fraud attack vectors remain consistent with prior quarter.', action: 'Maintain current identity verification protocols.', icon: 'fa-shield-halved', colorClass: 'agent-3-gradient', targetPill: 'Fraud'}
             ]
         }
     };
@@ -128,7 +128,29 @@ document.addEventListener('DOMContentLoaded', () => {
             cardEl.setAttribute('title', `View intelligence signals filtered by ${kpi.title}`);
             document.getElementById(`kpi-icon-${index}`).innerHTML = `<i class="fa-solid ${kpi.icon}"></i>`;
             document.getElementById(`kpi-${index}-title`).textContent = kpi.title;
-            document.getElementById(`kpi-${index}-val`).textContent = kpi.val;
+            
+            // ----------------------------------------------------
+            // DYNAMIC DATA INTEGRITY: Calculate exact dataset volume
+            // ----------------------------------------------------
+            let count = 0;
+            if (LIVE_DATA && LIVE_DATA.length > 0) {
+                if (kpi.targetNav) { // Global dashboard KPI
+                    count = LIVE_DATA.filter(i => i.agentId === kpi.targetAgentId).length;
+                } else if (kpi.targetPill === 'All') { // Agent overview KPI
+                    const agentMap = { 'agent-1': 1, 'agent-2': 2, 'agent-3': 3 };
+                    count = LIVE_DATA.filter(item => item.agentId === agentMap[configKey]).length;
+                } else if (kpi.targetPill) { // Agent drill-down KPI
+                    const agentMap = { 'agent-1': 1, 'agent-2': 2, 'agent-3': 3 };
+                    const lowerPill = kpi.targetPill.toLowerCase();
+                    count = LIVE_DATA.filter(item => {
+                        if (item.agentId !== agentMap[configKey]) return false;
+                        const haystack = [item.title, item.summary, item.primaryTag, item.secondaryTags, item.agent, item.source].join(' ').toLowerCase();
+                        return haystack.includes(lowerPill);
+                    }).length;
+                }
+            }
+            
+            document.getElementById(`kpi-${index}-val`).textContent = count > 0 ? `${count} ${kpi.valLabel}` : `0 ${kpi.valLabel}`;
             
             // Build Tags
             const tagsContainer = document.getElementById(`kpi-${index}-tags`);
@@ -158,6 +180,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     });
                 }
+                
+                // Scroll down gracefully to focus on results
+                setTimeout(() => {
+                    document.getElementById('section-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
             };
         });
     }
