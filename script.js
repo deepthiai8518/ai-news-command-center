@@ -102,6 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.pill').forEach(el => el.classList.remove('active'));
                 span.classList.add('active');
                 
+                // Sync KPI Card visually when pill is clicked
+                document.querySelectorAll('.kpi-card').forEach(el => el.classList.remove('active-kpi'));
+                config.kpis.forEach((kpi, kpiIdx) => {
+                    if (kpi.targetPill === p) {
+                        document.getElementById(`kpi-card-${kpiIdx + 1}`).classList.add('active-kpi');
+                    }
+                });
+                
                 // Text filtering logic based on pill name
                 applyFeedFilter(configKey, p);
             });
@@ -112,7 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
         config.kpis.forEach((kpi, idx) => {
             const index = idx + 1;
             const cardEl = document.getElementById(`kpi-card-${index}`);
-            cardEl.className = `kpi-card glass ${kpi.colorClass}`;
+            
+            // Auto-highlight if this KPI corresponds to the default pill
+            const extraClass = (kpi.targetPill === config.pills[0]) ? 'active-kpi' : '';
+            
+            cardEl.className = `kpi-card glass ${kpi.colorClass} ${extraClass}`;
+            cardEl.setAttribute('title', `View intelligence signals filtered by ${kpi.title}`);
             document.getElementById(`kpi-icon-${index}`).innerHTML = `<i class="fa-solid ${kpi.icon}"></i>`;
             document.getElementById(`kpi-${index}-title`).textContent = kpi.title;
             document.getElementById(`kpi-${index}-val`).textContent = kpi.val;

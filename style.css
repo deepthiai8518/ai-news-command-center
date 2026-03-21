@@ -90,11 +90,19 @@ body {
     gap: 1.2rem; 
     position: relative; 
     overflow: hidden; 
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.2s; 
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.2s, background 0.2s; 
     cursor: pointer; 
 }
 .kpi-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.25); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
 .kpi-card:active { transform: scale(0.98); }
+
+/* Highlight Active State when its filter is engaged */
+.kpi-card.active-kpi {
+    border-color: rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-5px); /* Keeps it visibly popped */
+    box-shadow: 0 8px 30px rgba(255,255,255,0.1);
+}
 
 .agent-1-gradient::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gradient-1); }
 .agent-2-gradient::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gradient-2); }
