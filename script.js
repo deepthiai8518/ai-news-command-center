@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const AGENT_CONFIG = {
         'all': {
-            pageTitle: 'Command Center',
+            pageTitle: 'AI News Center',
             sectionTitle: 'Global Intelligence Feed',
             pills: ['All', 'High Impact', 'Recent (48h)', 'Watchlist (Escalated)', 'Regulatory'],
             kpis: [
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         'agent-1': {
-            pageTitle: 'Intelligence: AI Updates',
+            pageTitle: 'Intelligence: AI Tech',
             sectionTitle: 'Latest Technical Signals',
             pills: ['All', 'High Impact', 'Recent (48h)', 'Watchlist (Escalated)', 'Regulatory'],
             kpis: [
@@ -113,9 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (parsed.insight1Title && parsed.insight1Text) {
                     return {
                         f1_title: parsed.insight1Title,
-                        f1_val:   parsed.insight1Text,
+                        f1_val: parsed.insight1Text,
                         f2_title: parsed.insight2Title || 'Watchpoint',
-                        f2_val:   parsed.insight2Text  || 'Monitor for further developments.'
+                        f2_val: parsed.insight2Text || 'Monitor for further developments.'
                     };
                 }
             } catch (e) {
@@ -363,23 +363,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     return haystack.match(/regulat|compliance|liability|draft|ban|mandate|fca|mas|law|govern/);
                 });
             } else if (lowerPill === 'recent (48h)') {
-   		 const now = new Date();
-		 filteredData = filteredData.filter(i => {
-        	 if (!i.date) return false;
+                const now = new Date();
+                filteredData = filteredData.filter(i => {
+                    if (!i.date) return false;
 
-	        const articleDate = new Date(i.date);
-        	if (isNaN(articleDate)) return false;	
+                    const articleDate = new Date(i.date);
+                    if (isNaN(articleDate)) return false;
 
-	        const diffMs = now - articleDate;
-        	return diffMs <= 48 * 60 * 60 * 1000;
-	    	});
+                    const diffMs = now - articleDate;
+                    return diffMs <= 48 * 60 * 60 * 1000;
+                });
 
-	    } else if (lowerPill === 'watchlist (escalated)') {
-    		filteredData = filteredData.filter(i => {
-        	return String(i.escalation || '').toUpperCase() === 'YES';
-   	    });
-	    }
-		else {
+            } else if (lowerPill === 'watchlist (escalated)') {
+                filteredData = filteredData.filter(i => {
+                    return String(i.escalation || '').toUpperCase() === 'YES';
+                });
+            }
+            else {
                 filteredData = filteredData.filter(i => {
                     const haystack = [
                         i.title, i.summary, i.primary_tag,
